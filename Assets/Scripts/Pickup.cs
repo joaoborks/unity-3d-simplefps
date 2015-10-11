@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Pickup : MonoBehaviour
 {
-    public string pickupMessage;
+    public string itemName;
     public int rotationSpeed = 100;
 
     private Vector3 downVector;
@@ -25,7 +25,7 @@ public class Pickup : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            other.SendMessage(pickupMessage);
+            other.SendMessage("GetItem", itemName);
             Destroy(gameObject);
         }
     }

@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -34,12 +34,17 @@ public class Player : MonoBehaviour
     {
         get { return gotKey; }
     }
+    public List<string> hasItems
+    {
+        get { return gotItems; }
+    }
 
     // Object Variables
     private Vector3 moveDirection;
     private Vector3 camRotation;
     private int curHealth = _maxHealth;
     private int curAmmo;
+    private List<string> gotItems = new List<string>(4);
     private bool gotWeapon;
     private bool gotKey;
 
@@ -64,6 +69,10 @@ public class Player : MonoBehaviour
     public int maxAngle = 45;
     [Range(50, 500)]
     public int sensitivity = 200;
+    [Range(5, 50)]
+    public int healAmount = 25;
+    [Range(20, 100)]
+    public int ammoAmount = 40;
     
     // MonoBehaviour Functions
     private void Update()
@@ -109,7 +118,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
-        if (curAmmo > 0 && Input.GetButtonDown("Fire"))
+        if (gotWeapon && curAmmo > 0 && Input.GetButtonDown("Fire"))
         {
             // Displaying Shoot Feedback
             curAmmo--;
@@ -148,6 +157,21 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// Recovers the defaul amount of damage
+    /// </summary>
+    private void RecoverHealth()
+    {
+        if (curHealth == _maxHealth)
+            return;
+
+        curHealth += healAmount;
+        if (curHealth > _maxHealth)
+            curHealth = _maxHealth;
+
+        HealthUpdate(curHealth);
+    }
+
+    /// <summary>
     /// Collects a given amount of ammunition
     /// </summary>
     /// <param name="amount">The amount of ammo to pick</param>
@@ -161,10 +185,42 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets a key to use on locked doors
+    /// Gets the rifle and equips it
     /// </summary>
-    private void GetKey()
+    private void GetRifle()
     {
-        gotKey = true;
+        GameObject rifle = Instantiate(riflePrefab, weaponSlot.position, Quaternion.identity) as GameObject;
+        rifle.transform.SetParent(weaponSlot);        
+        rifle.transform.localScale = Vector3.one * 0.2f;
+        rifle.transform.localRotation = Quaternion.identity;
+        rifle.transform.localPosition = Vector3.zero;
+        gotWeapon = true;
+        TakeAmmo(20);
+    }
+
+    /// <summary>
+    /// Gets an item and process its required logic
+    /// </summary>
+    /// <param name="itemName">The item to get</param>
+    private void GetItem(string itemName)
+    {
+        switch (itemName)
+        {
+            case "Key":
+                gotKey = true;
+                break;
+            case "Rifle":
+                GetRifle();
+                break;
+            case "Health":
+                RecoverHealth();
+                break;
+            case "Ammo":
+                TakeAmmo(ammoAmount);
+                break;
+            default:
+                gotItems.Add(itemName);
+                break;
+        }
     }
 }
