@@ -18,7 +18,11 @@ public class Turret : MonoBehaviour
     public float engagedSpeed = 2.5f;
     [Range(0.1f, 1.5f)]
     public float shootCooldown = 1f;
+    [Range(3, 10)]
+    public int maxHealth = 5;
     public GameObject turretBullet;
+    public GameObject explosionPrefab;
+    public GameObject smokePrefab;
 
     // Object Variables
     private State state;
@@ -38,9 +42,11 @@ public class Turret : MonoBehaviour
     {
         get { return transform.FindChild("Collider").GetComponent<SphereCollider>().radius; }
     }
+    private int health;
 
     private void Start()
     {
+        health = maxHealth;
         StartCoroutine(DefaultUpdate());
     }
 
@@ -57,6 +63,24 @@ public class Turret : MonoBehaviour
                 if (hit.collider.tag == "Player")
                     StartCoroutine(EngagedUpdate(hit.transform));
             }
+        }
+    }
+
+    /// <summary>
+    /// Decrements health when damage taken and handle death event
+    /// </summary>
+    private void TakeDamage()
+    {
+        health--;
+        if (health <= 0)
+        {
+            GameObject explosion = Instantiate(explosionPrefab, tBase.position, Quaternion.identity) as GameObject;
+            Destroy(explosion, 4);
+            Instantiate(smokePrefab, tBase.position, Quaternion.identity);            
+            Destroy(tWeapon.gameObject);
+            Destroy(tBase.gameObject);
+            enabled = false;
+            Destroy(this);
         }
     }
 
@@ -92,8 +116,12 @@ public class Turret : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Shoots at the target in timed intervals
+    /// </summary>
     private IEnumerator EngagedShooting()
     {
+        yield return new WaitForSeconds(shootCooldown);
         while (state == State.Engaged)
         {
             Instantiate(turretBullet, tOrigin.position, tOrigin.rotation);
