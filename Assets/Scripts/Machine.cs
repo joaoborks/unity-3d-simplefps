@@ -5,6 +5,7 @@ public class Machine : MonoBehaviour
 {
     // Customizeable Variables
     public GameObject[] itemPrefabs = new GameObject[3];
+    public Animator planeHolder;
 
     // Object Variables
     private Transform[] items = new Transform[3];
@@ -40,6 +41,7 @@ public class Machine : MonoBehaviour
             GameObject item = Instantiate(itemPrefabs[number], items[number].position, Quaternion.identity) as GameObject;
             item.transform.SetParent(items[number]);
             itemPlaced[number] = true;
+            planeHolder.SetInteger("actionNumber", number + 1);
         }
     }
 }
