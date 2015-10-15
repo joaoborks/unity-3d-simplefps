@@ -11,6 +11,7 @@ public class Machine : MonoBehaviour
     private Transform[] items = new Transform[3];
     private string[] itemNames = new string[3];
     private bool[] itemPlaced = new bool[3];
+    private int activated = 0;
 
     private void Awake()
     {
@@ -38,10 +39,10 @@ public class Machine : MonoBehaviour
     {
         if (!itemPlaced[number])
         {
-            GameObject item = Instantiate(itemPrefabs[number], items[number].position, Quaternion.identity) as GameObject;
-            item.transform.SetParent(items[number]);
+            GameObject item = Instantiate(itemPrefabs[number], items[activated].position, items[activated].rotation) as GameObject;
+            item.transform.SetParent(items[activated++]);
             itemPlaced[number] = true;
-            planeHolder.SetInteger("actionNumber", number + 1);
+            planeHolder.SetInteger("actionNumber", activated);
         }
     }
 }

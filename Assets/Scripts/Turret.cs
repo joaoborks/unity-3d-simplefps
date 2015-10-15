@@ -12,6 +12,7 @@ public class Turret : MonoBehaviour
     }
 
     // Custom Variables
+    public bool rotate = true;
     [Range(100, 250)]
     public int rotationSpeed = 125;
     [Range(0.5f, 5f)]
@@ -20,6 +21,8 @@ public class Turret : MonoBehaviour
     public float shootCooldown = 1f;
     [Range(3, 10)]
     public int maxHealth = 5;
+    [Range(1f, 5f)]
+    public float searchTime = 3f;
     public GameObject turretBullet;
     public GameObject explosionPrefab;
     public GameObject smokePrefab;
@@ -38,6 +41,7 @@ public class Turret : MonoBehaviour
     {
         get { return tWeapon.GetChild(0); }
     }
+    private Vector3 rotateDir;
     private float sightRadius
     {
         get { return transform.FindChild("Collider").GetComponent<SphereCollider>().radius; }
@@ -47,12 +51,13 @@ public class Turret : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
+        rotateDir = Random.Range(0, 1f) > 0.5f ? Vector3.up : Vector3.down;
         StartCoroutine(DefaultUpdate());
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (state == State.Default && other.tag == "Player")
+        if (state != State.Engaged && other.tag == "Player")
         {
             Vector3 dir = other.transform.position - tBase.position;
             float angle = Vector3.Angle(dir, tBase.forward);
@@ -66,6 +71,12 @@ public class Turret : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (state == State.Engaged && other.tag == "Player")
+            StartCoroutine(SearchUpdate());
+    }
+
     /// <summary>
     /// Decrements health when damage taken and handle death event
     /// </summary>
@@ -74,8 +85,7 @@ public class Turret : MonoBehaviour
         health--;
         if (health <= 0)
         {
-            GameObject explosion = Instantiate(explosionPrefab, tBase.position, Quaternion.identity) as GameObject;
-            Destroy(explosion, 4);
+            Instantiate(explosionPrefab, tBase.position, Quaternion.identity);
             Instantiate(smokePrefab, tBase.position, Quaternion.identity);            
             Destroy(tWeapon.gameObject);
             Destroy(tBase.gameObject);
@@ -92,7 +102,8 @@ public class Turret : MonoBehaviour
         state = State.Default;
         while (state == State.Default)
         {
-            tBase.Rotate(Vector3.up, Time.deltaTime * rotationSpeed);
+            if (rotate)
+                tBase.Rotate(rotateDir, Time.deltaTime * rotationSpeed);
             yield return null;
         }
     }
@@ -106,12 +117,16 @@ public class Turret : MonoBehaviour
         state = State.Engaged;
         StartCoroutine(EngagedShooting());
         Vector3 dir;
+        float angle;
         while (state == State.Engaged)
         {
             dir = target.position - tBase.position;
             tBase.rotation = Quaternion.Lerp(tBase.rotation, Quaternion.LookRotation(dir), Time.deltaTime * engagedSpeed);
             tWeapon.LookAt(target);
-            tWeapon.localEulerAngles = new Vector3(Mathf.Clamp(tWeapon.eulerAngles.x, -30, 30), 0, 0);
+            angle = tWeapon.localEulerAngles.x;
+            if (angle > 180)
+                angle -= 360;
+            tWeapon.localEulerAngles = new Vector3(Mathf.Clamp(angle, -30, 30), 0, 0);
             yield return null;
         }
     }
@@ -127,5 +142,22 @@ public class Turret : MonoBehaviour
             Instantiate(turretBullet, tOrigin.position, tOrigin.rotation);
             yield return new WaitForSeconds(shootCooldown);
         }
+    }
+
+    /// <summary>
+    /// Keeps position waiting for a potential target
+    /// </summary>
+    private IEnumerator SearchUpdate()
+    {
+        state = State.Search;
+        float time = 0;
+        while (state == State.Search && time < searchTime)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        
+        if (state == State.Search)
+            StartCoroutine(DefaultUpdate());
     }
 }

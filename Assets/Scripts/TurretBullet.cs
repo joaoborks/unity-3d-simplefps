@@ -29,6 +29,7 @@ public class TurretBullet : MonoBehaviour
         if (other.collider.tag == "Player")
         {
             other.collider.SendMessage("TakeDamage", damage);
+            Destroy(gameObject);
         }
     }
 }
