@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     }
 
     // Object Variables
+    private Transform spawnPoint;
     private Vector3 moveDirection;
     private Vector3 camRotation;
     private int curHealth = _maxHealth;

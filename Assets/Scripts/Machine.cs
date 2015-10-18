@@ -1,14 +1,14 @@
 using UnityEngine;
-using System.Collections;
 
 public class Machine : MonoBehaviour
 {
     // Customizeable Variables
-    public GameObject[] itemPrefabs = new GameObject[3];
+    public GameObject[] itemPrefabs = new GameObject[4];
+    public GameObject[] doors = new GameObject[2];
     public Animator planeHolder;
 
     // Object Variables
-    private Transform[] items = new Transform[3];
+    private Transform[] items = new Transform[4];
     private string[] itemNames = new string[3];
     private bool[] itemPlaced = new bool[3];
     private int activated = 0;
@@ -18,7 +18,8 @@ public class Machine : MonoBehaviour
         for (int i = 0; i < items.Length; i++)
         {
             items[i] = transform.FindChild("Item " + (i + 1));
-            itemNames[i] = itemPrefabs[i].name;
+            if (i < itemNames.Length)
+                itemNames[i] = itemPrefabs[i].name;
         }
     }
 
@@ -42,7 +43,11 @@ public class Machine : MonoBehaviour
             GameObject item = Instantiate(itemPrefabs[number], items[activated].position, items[activated].rotation) as GameObject;
             item.transform.SetParent(items[activated++]);
             itemPlaced[number] = true;
+            if (number < doors.Length)
+                doors[number].SendMessage("ToggleDoor", true, SendMessageOptions.DontRequireReceiver);
             planeHolder.SetInteger("actionNumber", activated);
+            if (activated == 3)
+                Instantiate(itemPrefabs[activated], items[activated].position, Quaternion.identity);
         }
     }
 }
