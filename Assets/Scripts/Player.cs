@@ -143,18 +143,28 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// Updates the player spawnpoint by a given point
+    /// </summary>
+    /// <param name="newPoint">The new spawnpoint's transform</param>
+    private void UpdateSpawnpoint(Transform newPoint)
+    {
+        spawnPoint = newPoint;
+    }
+
+    /// <summary>
     /// Takes a given amount of damage
     /// </summary>
     /// <param name="amount">The amount of damage to take</param>
     private void TakeDamage(int amount)
     {
-        curHealth -= amount;
-        HealthUpdate(curHealth);
+        curHealth -= amount;        
         if (curHealth <= 0)
         {
-            // Die
-            Application.LoadLevel(0);
+            transform.position = spawnPoint.position;
+            transform.rotation = spawnPoint.rotation;
+            curHealth = maxHealth;
         }
+        HealthUpdate(curHealth);
     }
 
     /// <summary>

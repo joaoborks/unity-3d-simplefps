@@ -45,8 +45,6 @@ public class HudControl : MonoBehaviour
     private void UpdatePlayerHealth(int curHealth)
     {
         float percentage = (float)curHealth / Player.maxHealth;
-        healthCur.anchorMax = new Vector2(maxLength * percentage, healthCur.anchorMax.y);
+        healthCur.anchorMax = new Vector2(maxLength * percentage + (1 - maxLength), healthCur.anchorMax.y);
     }
-
-
 }
