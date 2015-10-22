@@ -64,9 +64,11 @@ public class Turret : MonoBehaviour
             if (angle < 55)
             {
                 RaycastHit hit;
-                Physics.Raycast(tBase.transform.position, dir.normalized, out hit, sightRadius);
-                if (hit.collider.tag == "Player")
-                    StartCoroutine(EngagedUpdate(hit.transform));
+                if (Physics.Raycast(tBase.transform.position, dir.normalized, out hit, sightRadius))
+                {
+                    if (hit.collider.tag == "Player")
+                        StartCoroutine(EngagedUpdate(hit.transform));
+                }
             }
         }
     }
