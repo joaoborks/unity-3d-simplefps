@@ -17,7 +17,7 @@ public class TurretBullet : MonoBehaviour
         get { return GetComponent<Rigidbody>(); }
     }
 
-	private void Awake ()
+	private void Start()
     {
         rb.AddRelativeForce(Vector3.forward * force, ForceMode.Impulse);
 

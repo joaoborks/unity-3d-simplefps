@@ -23,12 +23,17 @@ public class Turret : MonoBehaviour
     public int maxHealth = 5;
     [Range(1f, 5f)]
     public float searchTime = 3f;
+    public AudioClip hitSound;
     public GameObject turretBullet;
     public GameObject explosionPrefab;
     public GameObject smokePrefab;
 
     // Object Variables
     private State state;
+    private AudioSource source
+    {
+        get { return GetComponent<AudioSource>(); }
+    }
     private Transform tBase
     {
         get { return transform.GetChild(0); }
@@ -85,6 +90,8 @@ public class Turret : MonoBehaviour
     private void TakeDamage()
     {
         health--;
+        source.pitch = Random.Range(0.8f, 1.2f);
+        source.PlayOneShot(hitSound);
         if (health <= 0)
         {
             Instantiate(explosionPrefab, tBase.position, Quaternion.identity);
@@ -142,6 +149,8 @@ public class Turret : MonoBehaviour
         while (state == State.Engaged)
         {
             Instantiate(turretBullet, tOrigin.position, tOrigin.rotation);
+            source.pitch = Random.Range(0.8f, 1.2f);
+            source.Play();
             yield return new WaitForSeconds(shootCooldown);
         }
     }

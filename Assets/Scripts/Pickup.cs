@@ -6,6 +6,11 @@ public class Pickup : MonoBehaviour
     public string itemName;
     public int rotationSpeed = 100;
 
+    private AudioSource source
+    {
+        get { return GetComponent<AudioSource>(); }
+    }
+
     private Vector3 downVector;
     private Vector3 upVector;
 
@@ -26,6 +31,7 @@ public class Pickup : MonoBehaviour
         if (other.tag == "Player")
         {
             other.SendMessage("GetItem", itemName);
+            
             Destroy(gameObject);
         }
     }
