@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class GameManager : MonoBehaviour
@@ -18,6 +18,6 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        Application.LoadLevel(Application.loadedLevel);
+        Application.LoadLevel(0);
     }
 }
