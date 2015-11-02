@@ -9,6 +9,10 @@ public class HudControl : MonoBehaviour
     {
         get { return transform.FindChild("Module"); }
     }
+    private Transform itemModule
+    {
+        get { return transform.FindChild("ItemModule"); }
+    }
     private Transform ammo
     {
         get { return module.FindChild("Ammo"); }
@@ -17,24 +21,22 @@ public class HudControl : MonoBehaviour
     {
         get { return ammo.FindChild("Cur").GetComponent<Text>(); }
     }
-    private Transform health
+    private Slider health
     {
-        get { return module.FindChild("Health"); }
+        get { return module.FindChild("Health").GetComponent<Slider>(); }
     }
-    private RectTransform healthCur
-    {
-        get { return health.FindChild("Cur").GetComponent<RectTransform>(); }
-    }
-
-    // Object Variables
-    private float maxLength;
 
     private void Awake()
     {
         ammo.FindChild("Total").GetComponent<Text>().text = Player.maxAmmo.ToString();
-        maxLength = healthCur.anchorMax.x - healthCur.anchorMin.x;
         Player.HealthUpdate += UpdatePlayerHealth;
         Player.AmmoUpdate += UpdatePlayerAmmo;
+        Player.ItemUpdate += UpdatePlayerItems;
+    }
+
+    private void UpdatePlayerItems(string itemName)
+    {
+        throw new System.NotImplementedException();
     }
 
     private void UpdatePlayerAmmo(int curAmmo)
@@ -45,6 +47,6 @@ public class HudControl : MonoBehaviour
     private void UpdatePlayerHealth(int curHealth)
     {
         float percentage = (float)curHealth / Player.maxHealth;
-        healthCur.anchorMax = new Vector2(maxLength * percentage + (1 - maxLength), healthCur.anchorMax.y);
+        health.value = percentage;
     }
 }

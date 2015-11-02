@@ -54,6 +54,8 @@ public class Player : MonoBehaviour
     public static event HealthUpdateHandler HealthUpdate;
     public delegate void AmmoUpdateHandler(int curAmmo);
     public static event AmmoUpdateHandler AmmoUpdate;
+    public delegate void ItemUpdateHandler(string itemName);
+    public static event ItemUpdateHandler ItemUpdate;
 
     // Customizeable Variables
     public GameObject riflePrefab;
@@ -231,6 +233,7 @@ public class Player : MonoBehaviour
                 break;
             default:
                 gotItems.Add(itemName);
+                ItemUpdate(itemName);
                 break;
         }
     }
