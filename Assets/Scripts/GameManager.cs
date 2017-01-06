@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class GameManager : MonoBehaviour
@@ -17,7 +18,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator RestartTimer(float time)
     {
         yield return new WaitForSeconds(time);
-
-        Application.LoadLevel(0);
+        SceneManager.LoadScene(0);
     }
 }
