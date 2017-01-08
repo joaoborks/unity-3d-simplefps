@@ -17,24 +17,13 @@ public class Player : MonoBehaviour
     public static GameObject instance;
 
     // Reference Variables
-    private AudioSource source
-    {
-        get { return GetComponent<AudioSource>(); }
-    }
-    private CharacterController control
-    {
-        get { return GetComponent<CharacterController>(); }
-    }
-    private Transform cam
-    {
-        get { return Camera.main.transform; }
-    }
+    private AudioSource source;
+    private CharacterController control;
+    private Transform cam;
 
     // Public Reference Variables
-    public Transform weaponSlot
-    {
-        get { return cam.GetChild(0); }
-    }
+    [HideInInspector]
+    public Transform weaponSlot;
     public bool hasKey
     {
         get { return gotKey; }
@@ -96,6 +85,10 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         instance = gameObject;
+        source = GetComponent<AudioSource>();
+        control = GetComponent<CharacterController>();
+        cam = Camera.main.transform;
+        weaponSlot = cam.GetChild(0);
     }
 
     private void Update()
@@ -108,7 +101,26 @@ public class Player : MonoBehaviour
             bool pause = Time.timeScale > 0 ? true : false;
             PauseEvent(pause);
         }
+        #if UNITY_EDITOR || DEVELOPMENT_BUILD
+        Bypass();
+        #endif
     }
+
+    #if UNITY_EDITOR || DEVELOPMENT_BUILD
+    private void Bypass()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+            gotKey = true;
+        else if (Input.GetKeyDown(KeyCode.F2))
+            GetItem("Battery");
+        else if (Input.GetKeyDown(KeyCode.F3))
+            GetItem("SmallBattery");
+        else if (Input.GetKeyDown(KeyCode.F4))
+            GetItem("MediumBattery");
+        else if (Input.GetKeyDown(KeyCode.F5))
+            GetItem("GasCan");
+    }
+    #endif
 
     /// <summary>
     /// Controls camera rotation oriented by mouse position
@@ -145,7 +157,7 @@ public class Player : MonoBehaviour
                 moveDirection.y = jumpSpeed;            
         }
 
-        moveDirection.y -= gravity;
+        moveDirection.y -= gravity * Time.deltaTime;
         control.Move(moveDirection * speed * Time.deltaTime);
     }
 

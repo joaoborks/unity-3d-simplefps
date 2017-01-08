@@ -30,7 +30,8 @@ public class HostilePlane : MonoBehaviour
 
     private void FixedUpdate()
     {
-        origin.LookAt(target.position + Vector3.up * 2);
+        if (target != null)
+            origin.LookAt(target.position + Vector3.up * 2);
     }
 
     private IEnumerator TimedShooting()

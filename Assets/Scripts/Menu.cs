@@ -10,6 +10,12 @@ public class Menu : MonoBehaviour
     }
     private bool startable;
 
+    private void Awake()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     private void Update()
     {
         if (startable)
