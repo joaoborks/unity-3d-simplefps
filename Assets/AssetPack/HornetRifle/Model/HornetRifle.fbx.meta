@@ -1,0 +1,137 @@
+fileFormatVersion: 2
+guid: d5c1155b27f9a1f438c32bd7026b87c2
+timeCreated: 1431711856
+licenseType: Store
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: barrel
+    100002: butt_stock
+    100004: handguard
+    100006: Handle
+    100008: laser_pointer
+    100010: magazine
+    100012: magazine_slot
+    100014: optical
+    100016: pod_L
+    100018: pod_R
+    100020: pod_support
+    100022: //RootNode
+    100024: snip_barrel
+    100026: top_cover
+    100028: trigger
+    400000: barrel
+    400002: butt_stock
+    400004: handguard
+    400006: Handle
+    400008: laser_pointer
+    400010: magazine
+    400012: magazine_slot
+    400014: optical
+    400016: pod_L
+    400018: pod_R
+    400020: pod_support
+    400022: //RootNode
+    400024: snip_barrel
+    400026: top_cover
+    400028: trigger
+    2300000: barrel
+    2300002: butt_stock
+    2300004: handguard
+    2300006: Handle
+    2300008: laser_pointer
+    2300010: magazine
+    2300012: magazine_slot
+    2300014: optical
+    2300016: pod_L
+    2300018: pod_R
+    2300020: pod_support
+    2300022: snip_barrel
+    2300024: top_cover
+    2300026: trigger
+    3300000: barrel
+    3300002: butt_stock
+    3300004: handguard
+    3300006: Handle
+    3300008: laser_pointer
+    3300010: magazine
+    3300012: magazine_slot
+    3300014: optical
+    3300016: pod_L
+    3300018: pod_R
+    3300020: pod_support
+    3300022: snip_barrel
+    3300024: top_cover
+    3300026: trigger
+    4300000: pod_R
+    4300002: pod_support
+    4300004: pod_L
+    4300006: snip_barrel
+    4300008: barrel
+    4300010: laser_pointer
+    4300012: handguard
+    4300014: trigger
+    4300016: butt_stock
+    4300018: optical
+    4300020: top_cover
+    4300022: magazine_slot
+    4300024: magazine
+    4300026: Handle
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

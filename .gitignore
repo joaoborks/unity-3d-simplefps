@@ -29,17 +29,3 @@ obj/
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# =================== #
-# Unessential Folders #
-# =================== #
-Assets/AssetPack/
-Assets/Materials/
-Assets/Models/
-Assets/Standard Assets/
-Assets/Textures/
-Assets/AssetPack.meta
-Assets/Materials.meta
-Assets/Models.meta
-Assets/Standard Assets.meta
-Assets/Textures.meta
