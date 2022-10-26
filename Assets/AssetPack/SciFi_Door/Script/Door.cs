@@ -11,7 +11,7 @@ public class Door : MonoBehaviour
     }
     private Animator doorAnim
     {
-        get { return transform.parent.FindChild("door").GetComponent<Animator>(); }
+        get { return transform.parent.Find("door").GetComponent<Animator>(); }
     }
 
 	private void OnTriggerEnter(Collider other)

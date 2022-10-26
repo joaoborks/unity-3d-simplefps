@@ -32,7 +32,7 @@ public class Menu : MonoBehaviour
 
     public void ToControls()
     {
-        transform.FindChild("Controls").gameObject.SetActive(true);
+        transform.Find("Controls").gameObject.SetActive(true);
         source.Play();
         startable = true;
     }

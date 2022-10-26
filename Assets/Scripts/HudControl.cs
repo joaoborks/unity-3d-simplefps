@@ -12,32 +12,32 @@ public class HudControl : MonoBehaviour
 	// Reference Variables
     private Transform module
     {
-        get { return transform.FindChild("Module"); }
+        get { return transform.Find("Module"); }
     }
     private Transform itemModule
     {
-        get { return transform.FindChild("ItemModule"); }
+        get { return transform.Find("ItemModule"); }
     }    
     private Transform ammo
     {
-        get { return module.FindChild("Ammo"); }
+        get { return module.Find("Ammo"); }
     }
     private GameObject pauseMenu
     {
-        get { return transform.FindChild("Pause").gameObject; }
+        get { return transform.Find("Pause").gameObject; }
     }
     private Text ammoCur
     {
-        get { return ammo.FindChild("Cur").GetComponent<Text>(); }
+        get { return ammo.Find("Cur").GetComponent<Text>(); }
     }
     private Slider health
     {
-        get { return module.FindChild("Health").GetComponent<Slider>(); }
+        get { return module.Find("Health").GetComponent<Slider>(); }
     }
 
     private void Awake()
     {
-        ammo.FindChild("Total").GetComponent<Text>().text = Player.maxAmmo.ToString();
+        ammo.Find("Total").GetComponent<Text>().text = Player.maxAmmo.ToString();
         Player.HealthUpdate += UpdatePlayerHealth;
         Player.AmmoUpdate += UpdatePlayerAmmo;
         Player.ItemUpdate += UpdatePlayerItems;
@@ -62,7 +62,7 @@ public class HudControl : MonoBehaviour
 
     private void UpdatePlayerItems(string itemName)
     {
-        itemModule.FindChild(itemName).GetComponent<Toggle>().isOn = true;
+        itemModule.Find(itemName).GetComponent<Toggle>().isOn = true;
     }
 
     private void UpdatePlayerAmmo(int curAmmo)

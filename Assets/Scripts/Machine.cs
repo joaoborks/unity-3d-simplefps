@@ -17,7 +17,7 @@ public class Machine : MonoBehaviour
     {
         for (int i = 0; i < items.Length; i++)
         {
-            items[i] = transform.FindChild("Item " + (i + 1));
+            items[i] = transform.Find("Item " + (i + 1));
             if (i < itemNames.Length)
                 itemNames[i] = itemPrefabs[i].name;
         }

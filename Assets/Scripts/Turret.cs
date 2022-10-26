@@ -49,7 +49,7 @@ public class Turret : MonoBehaviour
     private Vector3 rotateDir;
     private float sightRadius
     {
-        get { return transform.FindChild("Collider").GetComponent<SphereCollider>().radius; }
+        get { return transform.Find("Collider").GetComponent<SphereCollider>().radius; }
     }
     private int health;
 

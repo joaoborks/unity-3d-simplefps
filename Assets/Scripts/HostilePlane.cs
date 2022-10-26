@@ -16,7 +16,7 @@ public class HostilePlane : MonoBehaviour
     }
     private Transform origin
     {
-        get { return transform.FindChild("Origin"); }
+        get { return transform.Find("Origin"); }
     }
 
     // Object Variables
