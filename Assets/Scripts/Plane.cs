@@ -7,14 +7,14 @@ public class Plane : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             Player player = other.GetComponent<Player>();
             if(player.hasItems.Exists(x => x.Equals("GasCan")))
             {                
                 GameObject plane = Instantiate(flyingPlane);
                 plane.transform.SetParent(transform.parent);
-                FindObjectOfType<GameManager>().SendMessage("RestartGame", 5);
+                FindAnyObjectByType<GameManager>().SendMessage("RestartGame", 5);
                 Destroy(player.gameObject);
                 cutsceneCamera.GetComponent<Camera>().enabled = true;
                 cutsceneCamera.GetComponent<AudioListener>().enabled = true;
