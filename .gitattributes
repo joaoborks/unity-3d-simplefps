@@ -1,11 +1,154 @@
-*.png filter=lfs diff=lfs merge=lfs -text
-*.bmp filter=lfs diff=lfs merge=lfs -text
-*.fbx filter=lfs diff=lfs merge=lfs -text
-*.psd filter=lfs diff=lfs merge=lfs -text
-*.tif filter=lfs diff=lfs merge=lfs -text
-*.wav filter=lfs diff=lfs merge=lfs -text
-*.mp3 filter=lfs diff=lfs merge=lfs -text
-*.ogg filter=lfs diff=lfs merge=lfs -text
-*.jpeg filter=lfs diff=lfs merge=lfs -text
-*.jpg filter=lfs diff=lfs merge=lfs -text
-*.ai filter=lfs diff=lfs merge=lfs -text
+####  Git Attributes file
+##
+##    Be VERY CAREFUL when adding stuff here.
+##    Official Documentation: https://git-scm.com/docs/gitattributes
+##
+##    Some useful attributes (effects) are:
+##    • text: Use for text files that should be mergeable.
+##        We recommend against using "-text". Use "binary" instead
+##    • eol=lf: Use to enforce line endings on any text file
+##        (even if they aren't supposed to be merged).
+##        Never use "eol=lf" with "binary" or "-text"
+##    • binary: Use for files that are not suposed to be merged.
+##        built-in macro attribute "binary" is equivalent to:
+##        [attr]binary -diff -merge -text
+##    • merge=unityyamlmerge: This forces git to resolve merges
+##        ONLY using this tool. ONLY .prefab and .unity files
+##        should have this. If the tool is not installed,
+##        its equivalent to "-merge"
+##    • -merge: This forces git to NOT TRY TO MERGE the files.
+##        All binary files should have this.
+##
+####  When Using Git LFS:
+##
+##    We need to add filter=lfs diff=lfs merge=lfs to a lot of file types.
+##    To avoid adding these tags to a lot of lines,
+##        we define the custom attribute below (that includes the 3 tags):
+[attr]uselfs  filter=lfs diff=lfs merge=lfs
+##
+##    Enabling diff files support in LFS
+##        According to: https://github.com/git-lfs/git-lfs/wiki/FAQ
+##        To enable diffing LFS files, EVERY developer must
+##        configure their own git environement.
+##        To do this, just open a git console and run:
+##            git config --global diff.lfstext.textconv cat
+##
+#### Unity ####
+*.cs                                text eol=lf diff=csharp
+*.cginc                             text eol=lf
+*.shader                            text eol=lf
+##    Common Files
+*.unity                             text eol=lf merge=unityyamlmerge
+*.prefab                            text eol=lf merge=unityyamlmerge
+*.asset                             text eol=lf -merge
+*.mat                               text eol=lf -merge
+*.anim                              text eol=lf -merge
+*.playable                          text eol=lf -merge
+*.meta                              text eol=lf -merge
+*.controller                        text eol=lf -merge
+*.spriteatlas                       text eol=lf -merge
+##    "physic" for 3D but "physics" for 2D
+*.physicMaterial2D                  text eol=lf -merge
+*.physicMaterial                    text eol=lf -merge
+*.physicsMaterial2D                 text eol=lf -merge
+*.physicsMaterial                   text eol=lf -merge
+##    Specific assets exceptions (should come after generic definitions)
+##    Generated NavMeshes, Terrains, and UMA slots are always binary,
+##        even if unity serialization is set to "force text"
+NavMesh.asset                       binary uselfs
+**/Terrain*/*.asset                 binary uselfs
+*_Slot.asset                        binary uselfs
+LightingData.asset                  binary uselfs
+OcclusionCullingData.asset          binary uselfs
+*.cubemap                           binary uselfs
+*.unitypackage                      binary uselfs
+##    FMOD
+/Assets/Plugins/FMOD/lib/mac/**     uselfs -text
+*.bank                              uselfs -text
+##    Images
+*.ai                                binary uselfs
+*.bmp                               binary uselfs
+*.exr                               binary uselfs
+*.gif                               binary uselfs
+*.hdr                               binary uselfs
+*.iff                               binary uselfs
+*.jpeg                              binary uselfs
+*.jpg                               binary uselfs
+*.pict                              binary uselfs
+*.png                               binary uselfs
+*.psd                               binary uselfs
+*.tga                               binary uselfs
+*.tif                               binary uselfs
+*.tiff                              binary uselfs
+##    Audio
+*.aif                               binary uselfs
+*.aiff                              binary uselfs
+*.it                                binary uselfs
+*.mod                               binary uselfs
+*.mp3                               binary uselfs
+*.ogg                               binary uselfs
+*.s3m                               binary uselfs
+*.wav                               binary uselfs
+*.xm                                binary uselfs
+##    Video
+*.asf                               binary uselfs
+*.avi                               binary uselfs
+*.flv                               binary uselfs
+*.mov                               binary uselfs
+*.mp4                               binary uselfs
+*.mkv                               binary uselfs
+*.mpeg                              binary uselfs
+*.mpg                               binary uselfs
+*.ogv                               binary uselfs
+*.wmv                               binary uselfs
+##    3D models
+*.3dm                               binary uselfs
+*.3ds                               binary uselfs
+*.blend                             binary uselfs
+*.c4d                               binary uselfs
+*.collada                           binary uselfs
+*.dae                               binary uselfs
+*.dxf                               binary uselfs
+*.FBX                               binary uselfs
+*.fbx                               binary uselfs
+*.jas                               binary uselfs
+*.lws                               binary uselfs
+*.lxo                               binary uselfs
+*.ma                                binary uselfs
+*.max                               binary uselfs
+*.mb                                binary uselfs
+*.obj                               binary uselfs
+*.ply                               binary uselfs
+*.skp                               binary uselfs
+*.stl                               binary uselfs
+*.ztl                               binary uselfs
+##    Compressed Archive
+*.7z                                binary uselfs
+*.bz2                               binary uselfs
+*.gz                                binary uselfs
+*.rar                               binary uselfs
+*.tar                               binary uselfs
+*.zip                               binary uselfs
+*.tgz                               binary uselfs
+##    Fonts
+*.otf                               binary uselfs
+*.ttf                               binary uselfs
+##    Compiled Dynamic Library
+*.dll                               binary uselfs
+*.pdb                               binary uselfs
+*.so                                binary uselfs
+*.a                                 binary uselfs
+##    Executable/Installer
+*.apk                               binary uselfs
+*.exe                               binary uselfs
+##    Documents
+*.pdf                               binary uselfs
+##    ETC
+*.rns                               binary uselfs
+*.reason                            binary uselfs
+##    Collapse Unity-generated files on GitHub
+*.asset                             linguist-generated
+*.mat                               linguist-generated
+*.meta                              linguist-generated
+*.prefab                            linguist-generated
+*.unity                             linguist-generated

@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Semantic Release
+    runs-on: ubuntu-latest
+    outputs:
+      new_release_version: ${{ steps.semantic.outputs.new_release_version }}
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        persist-credentials: false
+    - name: Semantic Release
+      id: semantic
+      uses: cycjimmy/semantic-release-action@v4
+      with:
+        extra_plugins: |
+          @semantic-release/changelog
+          semantic-release-replace-plugin
+          @semantic-release/git
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  build-windows:
+    needs: release
+    uses: ./.github/workflows/unity-build.yml
+    with:
+      checkout-ref: ${{ needs.release.outputs.new_release_version }}
+      versioning: 'Custom'
+      version: ${{ needs.release.outputs.new_release_version }}
+    secrets: inherit

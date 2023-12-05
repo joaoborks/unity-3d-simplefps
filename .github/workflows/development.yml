@@ -1,0 +1,13 @@
+name: Development
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-windows:
+    uses: ./.github/workflows/unity-build.yml
+    with:
+      versioning: 'Semantic'
+    secrets: inherit
