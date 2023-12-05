@@ -59,6 +59,7 @@ NavMesh.asset                       binary uselfs
 **/Terrain*/*.asset                 binary uselfs
 *_Slot.asset                        binary uselfs
 LightingData.asset                  binary uselfs
+OcclusionCullingData.asset          binary uselfs
 *.cubemap                           binary uselfs
 *.unitypackage                      binary uselfs
 ##    FMOD
